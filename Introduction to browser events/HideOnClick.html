@@ -36,6 +36,19 @@
     . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
   </div>
 
+  <br><br><br>
+
+  <p id="Sweeties">
+    <spam id="close">▶</spam>
+    <spam id="down" style="display: none;">▼</spam>
+    Sweeties (click me)!
+  </p>
+  <ul id="dropDown" style="display: none;">
+    <li>Cake</li>
+    <li>Donut</li>
+    <li>Honey</li>
+  </ul>
+
 
   <script>
     //Hide On Click
@@ -82,6 +95,27 @@
       ball.style.left = ballCoords.left + 'px';
       ball.style.top = ballCoords.top + 'px';  
     }
+
+    //Create a sliding menu
+    const closeArrow = document.getElementById("close");
+    const downArrow = document.getElementById("down");
+    const sweeties = document.getElementById("Sweeties");
+    const dropDown = document.getElementById("dropDown")
+    sweeties.addEventListener("click", clicked)
+    function clicked(event){
+      console.log("here");
+      if(closeArrow.style.display === "none"){
+        closeArrow.style.display = "inline";
+        downArrow.style.display = "none";
+        dropDown.style.display = "none";
+      }
+      else{
+        closeArrow.style.display = "none";
+        downArrow.style.display = "inline";
+        dropDown.style.display = "inline";
+      }
+    }
+
   </script>
 
 </body>
