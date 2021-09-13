@@ -12,11 +12,12 @@
       overflow: hidden;
     }
     #ball {
-    position: absolute;
-    left: 19px; 
-    top: 168px;
-    transition: 1s all; 
-}
+      position: absolute;
+      left: 19px; 
+      top: 168px;
+      transition: 1s all; 
+    }
+
   </style>
 </head>
 
@@ -50,8 +51,22 @@
   </ul>
 
 
+  <br><br><br>
+
+  <div id="removeMe" style="background-color: #00FF00; height: 50px;">
+    <p>
+      The horse is one of two extant subspecies of Equus ferus. It is an odd-toed ungulate mammal belonging to the taxonomic family Equidae.<br>
+      The horse has evolved over the past 45 to 55 million years from a small multi-toed creature, Eohippus, into the large, single-toed animal of today.
+    </p>
+    <p id="Ex" style="color: red;">
+      [X]
+    </p>
+  </div>
+
+
   <script>
     //Hide On Click
+    //========================================
     const hideButton = document.getElementById("hider");
     hideButton.addEventListener("click", hide);
     function hide(){
@@ -59,6 +74,7 @@
     }
 
     //Hide Self
+    //========================================
     const selfButton = document.getElementById("self");
     selfButton.onclick = function() {
       selfButton.style.display = 'none';
@@ -71,6 +87,7 @@
     // But onclick 2 also is signed in too.
 
     // Move the ball across the field
+    //========================================
     const field = document.getElementById("field");
     field.addEventListener("click", moveBall);
 
@@ -97,6 +114,7 @@
     }
 
     //Create a sliding menu
+    //========================================
     const closeArrow = document.getElementById("close");
     const downArrow = document.getElementById("down");
     const sweeties = document.getElementById("Sweeties");
@@ -114,6 +132,16 @@
         downArrow.style.display = "inline";
         dropDown.style.display = "inline";
       }
+    }
+
+    // Add a closing button
+    //========================================
+    const ex = document.getElementById("Ex");
+    const removeMe = document.getElementById("removeMe")
+    ex.addEventListener('click', exClicked);
+
+    function exClicked(){
+      removeMe.style.display = "none";
     }
 
   </script>
