@@ -1,0 +1,147 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  
+  <style>
+    html, body {
+        margin: 0;
+        padding: 0;
+    }
+
+    #field {
+        
+        width: 800px;
+        height: 500px;
+        float: left;
+    }
+
+    /* heroes and the ball (dragables) */
+
+    .hero {
+        background: url(https://js.cx/drag-heroes/heroes.png);
+        width: 130px;
+        height: 128px;
+        float: left;
+    }
+
+    #hero1 {
+        background-position: 0 0;
+    }
+
+    #hero2 {
+        background-position: 0 -128px;
+    }
+
+    #hero3 {
+        background-position: -120px 0;
+    }
+
+    #hero4 {
+        background-position: -125px -128px;
+    }
+
+    #hero5 {
+        background-position: -248px -128px;
+    }
+
+    #hero6 {
+        background-position: -244px 0;
+    }
+
+    .draggable {
+        cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>  
+
+  <div id="field">
+
+  </div>
+
+  <div class="hero draggable" id="hero1"></div>
+  <div class="hero draggable" id="hero2"></div>
+  <div class="hero draggable" id="hero3"></div>
+  <div class="hero draggable" id="hero4"></div>
+  <div class="hero draggable" id="hero5"></div>
+  <div class="hero draggable" id="hero6"></div>
+
+  <img src="https://en.js.cx/clipart/ball.svg" class="draggable">
+
+  <div style="clear:both"></div>
+
+  
+</body>
+<script>    
+    document.onmousedown = function(event) {  
+        event.preventDefault();
+
+        let target = event.target;     
+        let shiftX = event.clientX - target.getBoundingClientRect().left;
+        let shiftY = event.clientY - target.getBoundingClientRect().top;        
+            
+        let MaxLeft = window.innerWidth - target.clientWidth;                        
+              
+        document.addEventListener("mousemove", onMouseMove);
+        document.addEventListener("mouseup", onMouseUp);           
+
+        console.log(document.documentElement.getBoundingClientRect().bottom, " --- " + document.documentElement.getBoundingClientRect().top);
+
+        function onMouseMove(event) {      
+            
+            target.style.position="fixed";
+            let targetLeft = event.clientX - shiftX;
+            let targetTop  = event.clientY - shiftY;             
+
+            targetLeft = Math.max(targetLeft ,0 );
+            targetLeft = Math.min(targetLeft ,MaxLeft );
+
+            
+            let newBottom = targetTop + target.offsetHeight;
+            if (newBottom > document.documentElement.clientHeight) {
+               // need to scroll
+               let docBottom = document.documentElement.getBoundingClientRect().bottom;
+               //Minimum scroll is 10
+               let scrollY = Math.min(docBottom - newBottom, 10);
+
+               if (scrollY < 0) {
+                   scrollY = 0;
+               }
+               window.scrollBy(0, scrollY);
+            }       
+            //make sure the object does not cross the buttom
+            targetTop = Math.min(targetTop, document.documentElement.clientHeight - target.offsetHeight);
+            
+            console.log("targettop" +targetTop);
+            if (targetTop < 0) {
+                // scroll up
+                let scrollY = Math.min(-targetTop, 10);               
+                console.log("targettop" +targetTop + "scrollY" + scrollY) ;
+
+                window.scrollBy(0, -scrollY);       
+                targetTop = Math.max(targetTop,0);
+            }
+            
+            target.style.left = targetLeft + 'px';
+            target.style.top = targetTop + 'px';
+            
+        }
+        function onMouseUp() {
+            document.removeEventListener('mouseup', onMouseUp);
+            document.removeEventListener('mousemove', onMouseMove); 
+            target.style.top = parseInt(target.style.top) + window.pageYOffset + 'px';  
+            target.style.position = 'absolute';        
+        }
+
+    }
+
+       
+
+
+    
+</script>
+
+</html>
